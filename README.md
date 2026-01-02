@@ -2,7 +2,11 @@ Visualizer for a talk given at the Recurse Center about equidistribution. Allows
 
 Written at the Recurse Center in late 2025.
 
-![At least doubly equidistributed](images/double_eq.png)
-![Just one line](images/single_line.png)
-![All parallels](images/heavy_parallel.png)
-![No pattern](images/without_pattern.png)
+<p align="center">
+  <img src="images/single_line.png" width="300">
+  <img src="images/heavy_parallel.png" width="300">
+</p>
+<p align="center">
+  <img src="images/double_eq.png" width="300">
+  <img src="images/without_pattern.png" width="300">
+</p>
