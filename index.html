@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <link rel="icon" href="data:," />
+  <head>
+    <meta charset="UTF-8" />
+    <title>Demo</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: #f0f0f0;
+      }
+      #container {
+        background: white;
+        border: 2px solid black;
+        width: 770px;
+        height: 770px;
+        position: relative;
+      }
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <canvas id="lines" width="770" height="770"></canvas>
+    </div>
+    <script type="module" src="instructions.js"></script>
+    <script type="module">
+      const container = document.getElementById("container");
+      const lineCanvas = document.getElementById("lines");
+      const ctx = lineCanvas.getContext("2d");
+
+      import { createDots, resetDots, toggleDot } from "./dots.js";
+      import { makeLines } from "./lines.js";
+
+      const params = new URLSearchParams(window.location.search);
+      const gridSize = params.has("grid")
+        ? parseInt(params.get("grid"), 10)
+        : 5;
+      const allowed = [5, 7, 11];
+      if (!allowed.includes(gridSize)) {
+        const style = document.querySelector("style");
+        style.textContent = `
+          body {
+	    display: absolute;
+          }
+        `;
+        document.body.innerHTML = `
+	  <h1>Invalid grid size</h1>
+	  <p>Allowed values are 5, 7, or 11</p>
+	  <p>End the url with /?grid=5, /?grid=7, or /?grid=11</p>
+	  <p>Or just least the query off and the grid will default to 5</p>
+	`;
+        throw new Error("Invalid grid size");
+      }
+
+      let lineClicks = [];
+      let presentRawLines = new Set();
+      const dots = createDots(container, gridSize);
+      let lines = makeLines(container, lineClicks, gridSize);
+
+      let dDown = false;
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "d") dDown = true;
+      });
+      document.addEventListener("keyup", (e) => {
+        if (e.key === "d") dDown = false;
+      });
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", (event) => {
+          if (dDown) {
+            toggleDot(dot);
+          } else if (dot != lineClicks[0]) {
+            lineClicks.push(dot);
+            if (lineClicks.length == 2) {
+              lines.handleDotClick(lineClicks);
+              presentRawLines.add([lineClicks[0], lineClicks[1]]);
+              lineClicks.length = 0;
+            }
+          }
+        });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          if (dDown) {
+            resetDots(dots);
+          } else if (event.shiftKey) {
+            Array.from(presentRawLines).forEach((el) => {
+              lines.parallelLines(el);
+            });
+            presentRawLines = new Set();
+          } else {
+            ctx.clearRect(0, 0, lineCanvas.width, lineCanvas.height);
+            lineClicks.length = 0;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
