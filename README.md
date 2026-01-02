@@ -7,6 +7,6 @@ Written at the Recurse Center in late 2025.
   <img src="images/heavy_parallel.png" width="300">
 </p>
 <p align="center">
-  <img src="images/double_eq.png" width="300">
   <img src="images/without_pattern.png" width="300">
+  <img src="images/double_eq.png" width="300">
 </p>
