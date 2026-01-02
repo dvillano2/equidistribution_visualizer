@@ -2,7 +2,6 @@ Visualizer for a talk given at the Recurse Center about equidistribution. Allows
 
 Check it out here: [5x5](https://equidistribution-visualizer.onrender.com/?grid=5) [7x7](https://equidistribution-visualizer.onrender.com/?grid=7) [11x11](https://equidistribution-visualizer.onrender.com/?grid=11)
 
-
 Written at the Recurse Center in late 2025.
 
 <p align="center">
