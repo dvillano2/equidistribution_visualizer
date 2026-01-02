@@ -50,19 +50,19 @@
         : 5;
       const allowed = [5, 7, 11];
       if (!allowed.includes(gridSize)) {
-        const style = document.querySelector("style");
-        style.textContent = `
-          body {
-	    display: absolute;
-          }
-        `;
-        document.body.innerHTML = `
-	  <h1>Invalid grid size</h1>
-	  <p>Allowed values are 5, 7, or 11</p>
-	  <p>End the url with /?grid=5, /?grid=7, or /?grid=11</p>
-	  <p>Or just least the query off and the grid will default to 5</p>
+	const style = document.querySelector("style");
+	style.textContent = `
+	body {
+	display: absolute;
+	}
 	`;
-        throw new Error("Invalid grid size");
+	document.body.innerHTML = `
+	<h1>Invalid grid size</h1>
+	<p>Allowed values are 5, 7, or 11</p>
+	<p>End the url with /?grid=5, /?grid=7, or /?grid=11</p>
+	<p>Or just least the query off and the grid will default to 5</p>
+	`;
+	throw new Error("Invalid grid size");
       }
 
       let lineClicks = [];
